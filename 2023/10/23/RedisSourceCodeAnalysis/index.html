@@ -14,7 +14,7 @@
 <meta property="og:description" content="Redis数据结构设计Redis中的键值存储是基于字典数据结构实现的。在Redis的源代码中，dict.c文件包含了字典的实现代码，该字典用于存储键值对dict.c 是 Redis 中负责实现字典（哈希表）数据结构的核心文件。字典是 Redis 中键值对的基本存储结构 12345678910111213141516171819202122232425262728293031323334353637">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-10-22T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-10-24T07:32:19.216Z">
+<meta property="article:modified_time" content="2023-10-24T09:20:47.026Z">
 <meta property="article:author" content="Raymond">
 <meta property="article:tag" content="redis">
 <meta property="article:tag" content="structure">
@@ -98,7 +98,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Redis%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.</span> <span class="toc-text">Redis数据结构设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E5%85%B8"><span class="toc-number">1.0.1.</span> <span class="toc-text">字典</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="toc-number">1.0.2.</span> <span class="toc-text">哈希表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8%E8%8A%82%E7%82%B9"><span class="toc-number">1.0.3.</span> <span class="toc-text">哈希表节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E7%9A%84%E5%87%BD%E6%95%B0"><span class="toc-number">1.0.4.</span> <span class="toc-text">哈希的函数</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Redis%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.</span> <span class="toc-text">Redis数据结构设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E5%85%B8"><span class="toc-number">1.0.1.</span> <span class="toc-text">字典</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="toc-number">1.0.2.</span> <span class="toc-text">哈希表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8%E8%8A%82%E7%82%B9"><span class="toc-number">1.0.3.</span> <span class="toc-text">哈希表节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E5%87%BD%E6%95%B0"><span class="toc-number">1.0.4.</span> <span class="toc-text">哈希函数</span></a></li></ol></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -159,18 +159,18 @@
 </ul>
 <p>Redis的dict.c文件包含了用于实现字典（哈希表）数据结构的许多函数。以下是一些dict.c中的主要函数，它们用于操作字典、哈希表和哈希表节点。</p>
 <ul>
-<li>_dictCreate_： 该函数用于创建一个新的字典。它接受一个指向数据类型特定函数集的指针，这个函数集定义了如何处理键和值。</li>
-<li>_dictAdd_： 用于向字典中添加一个键值对。如果键已存在，则函数会更新值。</li>
-<li>_dictReplace_： 与dictAdd类似，但仅在键不存在时添加。如果键已存在，它不会执行更新。</li>
-<li>_dictDelete_： 删除字典中的指定键值对。</li>
-<li>_dictFind_： 查找并返回字典中特定键对应的哈希表节点。</li>
-<li><em>dictGetKey</em> 和 dictGetVal： 分别用于获取哈希表节点的键和值。</li>
-<li>_dictResize_： 当字典的负载因子超过指定阈值时，这个函数会对字典进行重新哈希，以增加哈希表的大小。</li>
-<li>_dictRehash 和 dictRehashMilliseconds_： 这两个函数用于在渐进式rehash期间，将键从旧哈希表rehash到新哈希表。</li>
-<li>_dictRelease_： 释放字典中的所有节点，并最终释放字典本身。</li>
-<li>_dictGetIterator 和 dictReleaseIterator_： 用于创建和释放迭代器，以遍历字典中的所有键值对。</li>
-<li>_dictIteratorNext_： 用于在迭代器上前进到下一个键值对。</li>
-<li>_dictGenericDelete_： 通用的删除函数，可以根据指定的标志来删除哈希表中的节点，包括是否释放键和值的内存。</li>
+<li><strong>dictCreate</strong>： 该函数用于创建一个新的字典。它接受一个指向数据类型特定函数集的指针，这个函数集定义了如何处理键和值。</li>
+<li><strong>dictAdd</strong>： 用于向字典中添加一个键值对。如果键已存在，则函数会更新值。</li>
+<li><strong>dictReplace</strong>： 与dictAdd类似，但仅在键不存在时添加。如果键已存在，它不会执行更新。</li>
+<li><strong>dictDelete</strong>： 删除字典中的指定键值对。</li>
+<li><strong>dictFind</strong>： 查找并返回字典中特定键对应的哈希表节点。</li>
+<li><strong>dictGetKey 和 dictGetVal</strong>： 分别用于获取哈希表节点的键和值。</li>
+<li><strong>dictResize</strong>： 当字典的负载因子超过指定阈值时，这个函数会对字典进行重新哈希，以增加哈希表的大小。</li>
+<li><strong>dictRehash 和 dictRehashMilliseconds</strong>： 这两个函数用于在渐进式rehash期间，将键从旧哈希表rehash到新哈希表。</li>
+<li><strong>dictRelease</strong>： 释放字典中的所有节点，并最终释放字典本身。</li>
+<li><strong>dictGetIterator 和 dictReleaseIterator</strong>： 用于创建和释放迭代器，以遍历字典中的所有键值对。</li>
+<li><strong>dictIteratorNext</strong>： 用于在迭代器上前进到下一个键值对。</li>
+<li><strong>dictGenericDelete</strong>： 通用的删除函数，可以根据指定的标志来删除哈希表中的节点，包括是否释放键和值的内存。</li>
 </ul>
 <h3 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h3><p>Redis的哈希表（hash table）在Redis 6.2.6中的接口设计主要包括对外提供的API函数，允许用户与哈希表进行交互。以下是Redis 6.2.6哈希表的一些核心接口和函数</p>
 <p><strong>dictType 结构体</strong>： 这个结构体定义了数据类型特定函数集，包括哈希函数、键复制、值复制、键比较、键销毁和值销毁等函数。用户可以通过dictType结构体来自定义哈希表中键值对的操作方式。</p>
@@ -180,8 +180,13 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dictEntry</span> &#123;</span></span><br><span class="line">    <span class="type">void</span> *key;</span><br><span class="line">    <span class="class"><span class="keyword">union</span> &#123;</span></span><br><span class="line">        <span class="type">void</span> *val;</span><br><span class="line">        <span class="type">uint64_t</span> u64;</span><br><span class="line">        <span class="type">int64_t</span> s64;</span><br><span class="line">    &#125; v;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">dictEntry</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125; dictEntry;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p><strong>字典API函数</strong> : Redis提供了一系列的API函数，允许用户创建、操作和管理哈希表。这些函数包括 dictCreate（创建哈希表）、dictAdd（添加键值对）、dictDelete（删除键值对）、dictFind（查找键值对）、dictGetKey（获取键）、dictGetVal（获取值）、dictGetIterator（创建迭代器）、dictIteratorNext（迭代器遍历）、dictReleaseIterator（释放迭代器）等</p>
-<h3 id="哈希表节点"><a href="#哈希表节点" class="headerlink" title="哈希表节点"></a>哈希表节点</h3><p>Redis 6.2.6版本中的哈希表节点设计具有以下特点</p>
-<h3 id="哈希的函数"><a href="#哈希的函数" class="headerlink" title="哈希的函数"></a>哈希的函数</h3>
+<h3 id="哈希表节点"><a href="#哈希表节点" class="headerlink" title="哈希表节点"></a>哈希表节点</h3><p>Redis 6.2.6版本中的哈希表节点设计具有以下特点<br><strong>dictEntry 结构体</strong>： 在Redis中，哈希表的每个节点都是一个dictEntry结构体，代表一个键值对。该结构体具有以下字段：</p>
+<p><strong>void *key</strong>：键，可以是任何类型的指针。<br><strong>union</strong>：值，Redis的哈希表支持多种不同的值类型，因此使用了联合体（union）来存储值。值可以是指针、64位无符号整数（uint64_t）或64位有符号整数（int64_t）。<br><strong>struct dictEntry *next</strong>：指向下一个哈希冲突的节点的指针，以形成链表。<br><strong>多值类型支持</strong>： dictEntry结构体中的值字段支持多种类型，这使得Redis的哈希表非常灵活，可以存储不同数据类型的值。<br><strong>泛型设计</strong>： Redis的哈希表节点的设计是泛型的，这意味着它可以存储不同类型的键值对。这种泛型设计是通过void *类型的键字段和值字段实现的，允许用户自定义键和值的数据类型。<br><strong>链表处理哈希冲突</strong>： Redis使用链表来处理哈希冲突。当多个键哈希到同一个桶时，它们将以链表的形式存储在同一个桶中。这使得Redis可以有效地处理多个键具有相同哈希值的情况。</p>
+<blockquote>
+<p>源码中的具体实现： 在Redis的源代码中，dictEntry结构体的具体定义和函数实现可以在dict.c文件中找到。这个文件包含了各种操作哈希表的函数，包括插入、查找、删除、迭代等。通过查看这些源码，可以深入了解dictEntry的设计和实现。</p>
+</blockquote>
+<h3 id="哈希函数"><a href="#哈希函数" class="headerlink" title="哈希函数"></a>哈希函数</h3><p>在Redis 6.2.6中，哈希函数的具体实现和设计是基于MurmurHash哈希算法。MurmurHash是一种非加密性的哈希算法，被广泛用于哈希表、散列和数据校验等应用<br><strong>MurmurHash算法</strong>： Redis使用MurmurHash算法作为默认的哈希函数。MurmurHash是一种快速、高效的哈希算法，其设计目标是具有良好的分布性和低碰撞率。<br><strong>32位哈希值</strong>： Redis的MurmurHash实现生成32位的哈希值。这个32位哈希值可以用于确定键在哈希表中的位置。<br><strong>分桶和哈希槽</strong>： Redis的哈希表会将哈希值映射到一组桶（buckets）中，这些桶以哈希槽（slots）的形式组织。Redis会在桶中存储键值对，并通过哈希槽来分布这些桶。<br><strong>一致性哈希</strong>： Redis还使用了一致性哈希算法，它在分布式环境中特别有用。一致性哈希算法将键映射到哈希环（hash ring）上的节点，以便在节点的变化时，最小程度地影响数据的重新分布。<br><strong>哈希函数参数</strong>： 在Redis中，哈希函数通常使用两个参数，一个是键的名称，另一个是用于计算哈希的种子（seed）。这个种子在不同的哈希表操作中保持不变，以确保一致性哈希的准确性。</p>
+
   </div>
 </article>
 
@@ -207,7 +212,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Redis%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.</span> <span class="toc-text">Redis数据结构设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E5%85%B8"><span class="toc-number">1.0.1.</span> <span class="toc-text">字典</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="toc-number">1.0.2.</span> <span class="toc-text">哈希表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8%E8%8A%82%E7%82%B9"><span class="toc-number">1.0.3.</span> <span class="toc-text">哈希表节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E7%9A%84%E5%87%BD%E6%95%B0"><span class="toc-number">1.0.4.</span> <span class="toc-text">哈希的函数</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Redis%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.</span> <span class="toc-text">Redis数据结构设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E5%85%B8"><span class="toc-number">1.0.1.</span> <span class="toc-text">字典</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="toc-number">1.0.2.</span> <span class="toc-text">哈希表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8%E8%8A%82%E7%82%B9"><span class="toc-number">1.0.3.</span> <span class="toc-text">哈希表节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E5%87%BD%E6%95%B0"><span class="toc-number">1.0.4.</span> <span class="toc-text">哈希函数</span></a></li></ol></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
