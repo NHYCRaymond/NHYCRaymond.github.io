@@ -14,7 +14,7 @@
 <meta property="og:description" content="Redis数据结构设计Redis中的键值存储是基于字典数据结构实现的。在Redis的源代码中，dict.c文件包含了字典的实现代码，该字典用于存储键值对dict.c 是 Redis 中负责实现字典（哈希表）数据结构的核心文件。字典是 Redis 中键值对的基本存储结构 12345678910111213141516171819202122232425262728293031323334353637">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-10-23T10:50:21.000Z">
-<meta property="article:modified_time" content="2023-10-24T01:45:28.187Z">
+<meta property="article:modified_time" content="2023-10-24T01:53:29.203Z">
 <meta property="article:author" content="Raymond">
 <meta name="twitter:card" content="summary">
     
@@ -140,13 +140,13 @@
 <li>dictht 结构</li>
 </ol>
 <ul>
-<li>dictht 结构表示哈希表，包括一个指向哈希表数组的指针 table，哈希表大小 size，大小掩码 sizemask 用于计算索引，以及已使用的节点数量 used</li>
+<li>dictht 结构表示哈希表，包括一个指向<strong>哈希表数组的指针table</strong>，<strong>哈希表大小 size</strong>，<strong>大小掩码 sizemask 用于计算索引</strong>，以及<strong>已使用的节点数量 used</strong></li>
 </ul>
 <ol start="2">
 <li>dict 结构</li>
 </ol>
 <ul>
-<li>dict 结构代表整个字典。它包括一个数据类型特定函数集 dictType，指向特定数据类型的私有数据的指针 privdata，两个哈希表 ht[2] 用于实现渐进式 rehash，rehashidx 用于跟踪 rehash 进度，以及 iterators 记录正在运行的迭代器数量</li>
+<li>dict 结构代表整个字典。它包括一个数据类型特定<strong>函数集 dictType</strong>，指向特定数据类型的<strong>私有数据的指针 privdata</strong>，两个哈希表 <strong>ht[2] 用于实现渐进式 rehash，rehashidx 用于跟踪 rehash 进度</strong>，以及 <strong>iterators 记录正在运行的迭代器数量</strong></li>
 </ul>
 <ol start="3">
 <li>dictEntry 结构</li>
