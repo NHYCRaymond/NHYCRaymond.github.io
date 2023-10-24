@@ -15,8 +15,6 @@
           
           <category> backend </category>
           
-          <category> middleware </category>
-          
       </categories>
       
       
@@ -24,7 +22,7 @@
             
             <tag> redis </tag>
             
-            <tag> 数据结构 </tag>
+            <tag> structure </tag>
             
         </tags>
       
