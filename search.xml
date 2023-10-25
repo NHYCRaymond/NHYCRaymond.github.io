@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title>[object Object]</title>
+      <title>redis source code analysis -- server.c</title>
       <link href="/2023/10/25/redis-source-code-analysis-server-c/"/>
       <url>/2023/10/25/redis-source-code-analysis-server-c/</url>
       
@@ -13,14 +13,14 @@
       
       <categories>
           
-          <category> [object Object] </category>
+          <category> middleware </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> [object Object] </tag>
+            <tag> redis </tag>
             
         </tags>
       
