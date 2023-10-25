@@ -8,17 +8,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="Redis数据结构设计Redis中的键值存储是基于字典数据结构实现的。在Redis的源代码中，dict.c文件包含了字典的实现代码，该字典用于存储键值对dict.c 是 Redis 中负责实现字典（哈希表）数据结构的核心文件。字典是 Redis 中键值对的基本存储结构 12345678910111213141516171819202122232425262728293031323334353637">
 <meta property="og:type" content="article">
-<meta property="og:title" content="redis source code analysis">
+<meta property="og:title" content="redis source code analysis -- dict.c">
 <meta property="og:url" content="http://example.com/2023/10/23/RedisSourceCodeAnalysis/index.html">
 <meta property="og:site_name" content="TESTERLIFE">
 <meta property="og:description" content="Redis数据结构设计Redis中的键值存储是基于字典数据结构实现的。在Redis的源代码中，dict.c文件包含了字典的实现代码，该字典用于存储键值对dict.c 是 Redis 中负责实现字典（哈希表）数据结构的核心文件。字典是 Redis 中键值对的基本存储结构 12345678910111213141516171819202122232425262728293031323334353637">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/">
 <meta property="article:published_time" content="2023-10-22T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-10-24T09:20:47.026Z">
+<meta property="article:modified_time" content="2023-10-25T07:44:50.201Z">
 <meta property="article:author" content="Raymond">
 <meta property="article:tag" content="redis">
 <meta property="article:tag" content="structure">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/">
     
     
         
@@ -38,7 +40,7 @@
         
     
     <!-- title -->
-    <title>redis source code analysis</title>
+    <title>redis source code analysis -- dict.c</title>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -85,20 +87,20 @@
     <div id="share" style="display: none">
       <ul>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/10/23/RedisSourceCodeAnalysis/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&text=redis source code analysis"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&title=redis source code analysis"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&is_video=false&description=redis source code analysis"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=redis source code analysis&body=Check out this article: http://example.com/2023/10/23/RedisSourceCodeAnalysis/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&title=redis source code analysis"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&title=redis source code analysis"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&title=redis source code analysis"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&title=redis source code analysis"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&name=redis source code analysis&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&text=redis source code analysis -- dict.c"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&title=redis source code analysis -- dict.c"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&is_video=false&description=redis source code analysis -- dict.c"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=redis source code analysis -- dict.c&body=Check out this article: http://example.com/2023/10/23/RedisSourceCodeAnalysis/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&title=redis source code analysis -- dict.c"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&title=redis source code analysis -- dict.c"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&title=redis source code analysis -- dict.c"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&title=redis source code analysis -- dict.c"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&name=redis source code analysis -- dict.c&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Redis%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.</span> <span class="toc-text">Redis数据结构设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E5%85%B8"><span class="toc-number">1.0.1.</span> <span class="toc-text">字典</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="toc-number">1.0.2.</span> <span class="toc-text">哈希表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8%E8%8A%82%E7%82%B9"><span class="toc-number">1.0.3.</span> <span class="toc-text">哈希表节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E5%87%BD%E6%95%B0"><span class="toc-number">1.0.4.</span> <span class="toc-text">哈希函数</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Redis%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.</span> <span class="toc-text">Redis数据结构设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E5%85%B8"><span class="toc-number">1.0.1.</span> <span class="toc-text">字典</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="toc-number">1.0.2.</span> <span class="toc-text">哈希表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8%E8%8A%82%E7%82%B9"><span class="toc-number">1.0.3.</span> <span class="toc-text">哈希表节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E5%87%BD%E6%95%B0"><span class="toc-number">1.0.4.</span> <span class="toc-text">哈希函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UML-%E7%B1%BB%E5%9B%BE"><span class="toc-number">1.1.</span> <span class="toc-text">UML 类图</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -110,7 +112,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        redis source code analysis
+        redis source code analysis -- dict.c
     </h1>
 
 
@@ -128,7 +130,7 @@
       
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link-link" href="/tags/rds/" rel="tag">redis</a>, <a class="tag-link-link" href="/tags/structure/" rel="tag">structure</a>
+        <a class="tag-link-link" href="/tags/redis/" rel="tag">redis</a>, <a class="tag-link-link" href="/tags/structure/" rel="tag">structure</a>
     </div>
 
 
@@ -186,6 +188,7 @@
 <p>源码中的具体实现： 在Redis的源代码中，dictEntry结构体的具体定义和函数实现可以在dict.c文件中找到。这个文件包含了各种操作哈希表的函数，包括插入、查找、删除、迭代等。通过查看这些源码，可以深入了解dictEntry的设计和实现。</p>
 </blockquote>
 <h3 id="哈希函数"><a href="#哈希函数" class="headerlink" title="哈希函数"></a>哈希函数</h3><p>在Redis 6.2.6中，哈希函数的具体实现和设计是基于MurmurHash哈希算法。MurmurHash是一种非加密性的哈希算法，被广泛用于哈希表、散列和数据校验等应用<br><strong>MurmurHash算法</strong>： Redis使用MurmurHash算法作为默认的哈希函数。MurmurHash是一种快速、高效的哈希算法，其设计目标是具有良好的分布性和低碰撞率。<br><strong>32位哈希值</strong>： Redis的MurmurHash实现生成32位的哈希值。这个32位哈希值可以用于确定键在哈希表中的位置。<br><strong>分桶和哈希槽</strong>： Redis的哈希表会将哈希值映射到一组桶（buckets）中，这些桶以哈希槽（slots）的形式组织。Redis会在桶中存储键值对，并通过哈希槽来分布这些桶。<br><strong>一致性哈希</strong>： Redis还使用了一致性哈希算法，它在分布式环境中特别有用。一致性哈希算法将键映射到哈希环（hash ring）上的节点，以便在节点的变化时，最小程度地影响数据的重新分布。<br><strong>哈希函数参数</strong>： 在Redis中，哈希函数通常使用两个参数，一个是键的名称，另一个是用于计算哈希的种子（seed）。这个种子在不同的哈希表操作中保持不变，以确保一致性哈希的准确性。</p>
+<h2 id="UML-类图"><a href="#UML-类图" class="headerlink" title="UML 类图"></a>UML 类图</h2><p><img src="/" alt="dict.c"></p>
 
   </div>
 </article>
@@ -212,21 +215,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Redis%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.</span> <span class="toc-text">Redis数据结构设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E5%85%B8"><span class="toc-number">1.0.1.</span> <span class="toc-text">字典</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="toc-number">1.0.2.</span> <span class="toc-text">哈希表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8%E8%8A%82%E7%82%B9"><span class="toc-number">1.0.3.</span> <span class="toc-text">哈希表节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E5%87%BD%E6%95%B0"><span class="toc-number">1.0.4.</span> <span class="toc-text">哈希函数</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Redis%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.</span> <span class="toc-text">Redis数据结构设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E5%85%B8"><span class="toc-number">1.0.1.</span> <span class="toc-text">字典</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="toc-number">1.0.2.</span> <span class="toc-text">哈希表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8%E8%8A%82%E7%82%B9"><span class="toc-number">1.0.3.</span> <span class="toc-text">哈希表节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E5%87%BD%E6%95%B0"><span class="toc-number">1.0.4.</span> <span class="toc-text">哈希函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UML-%E7%B1%BB%E5%9B%BE"><span class="toc-number">1.1.</span> <span class="toc-text">UML 类图</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/10/23/RedisSourceCodeAnalysis/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&text=redis source code analysis"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&title=redis source code analysis"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&is_video=false&description=redis source code analysis"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=redis source code analysis&body=Check out this article: http://example.com/2023/10/23/RedisSourceCodeAnalysis/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&title=redis source code analysis"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&title=redis source code analysis"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&title=redis source code analysis"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&title=redis source code analysis"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&name=redis source code analysis&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&text=redis source code analysis -- dict.c"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&title=redis source code analysis -- dict.c"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&is_video=false&description=redis source code analysis -- dict.c"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=redis source code analysis -- dict.c&body=Check out this article: http://example.com/2023/10/23/RedisSourceCodeAnalysis/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&title=redis source code analysis -- dict.c"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&title=redis source code analysis -- dict.c"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&title=redis source code analysis -- dict.c"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&title=redis source code analysis -- dict.c"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/10/23/RedisSourceCodeAnalysis/&name=redis source code analysis -- dict.c&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
