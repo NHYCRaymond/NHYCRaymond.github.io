@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="AnimationPlayerAnimatedSprite2D 节点类型：AnimatedSprite2D 是Godot引擎中用于在2D场景中播放动画的节点之一。  创建 AnimatedSprite2D 节点：在Godot的场景编辑器中，右键点击场景根节点或其他节点，选择“添加节点（Add Node）”，然后搜索并选择 AnimatedSprite2D 节点，即可创建它。  属性和功能：Fram">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AnimationPlayer OR AnimatedSprite2D">
+<meta property="og:url" content="http://example.com/2023/12/18/Godot4%E8%A7%92%E8%89%B2%E5%B8%A7%E5%8A%A8%E7%94%BB%E5%88%B6%E4%BD%9C-AnimationPlayer-OR-AnimatedSprite2D/index.html">
+<meta property="og:site_name" content="TESTERLIFE">
+<meta property="og:description" content="AnimationPlayerAnimatedSprite2D 节点类型：AnimatedSprite2D 是Godot引擎中用于在2D场景中播放动画的节点之一。  创建 AnimatedSprite2D 节点：在Godot的场景编辑器中，右键点击场景根节点或其他节点，选择“添加节点（Add Node）”，然后搜索并选择 AnimatedSprite2D 节点，即可创建它。  属性和功能：Fram">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-12-18T12:41:00.000Z">
+<meta property="article:modified_time" content="2023-12-23T12:33:51.339Z">
+<meta property="article:author" content="Raymond">
+<meta property="article:tag" content="games">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>AnimationPlayer OR AnimatedSprite2D</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+<body>
+    
+      <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/nhycraymond">Github</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2023/12/18/godot-2d-pixcle-game/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/12/18/Godot4%E8%A7%92%E8%89%B2%E5%B8%A7%E5%8A%A8%E7%94%BB%E5%88%B6%E4%BD%9C-AnimationPlayer-OR-AnimatedSprite2D/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/12/18/Godot4%E8%A7%92%E8%89%B2%E5%B8%A7%E5%8A%A8%E7%94%BB%E5%88%B6%E4%BD%9C-AnimationPlayer-OR-AnimatedSprite2D/&text=AnimationPlayer OR AnimatedSprite2D"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/12/18/Godot4%E8%A7%92%E8%89%B2%E5%B8%A7%E5%8A%A8%E7%94%BB%E5%88%B6%E4%BD%9C-AnimationPlayer-OR-AnimatedSprite2D/&title=AnimationPlayer OR AnimatedSprite2D"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/12/18/Godot4%E8%A7%92%E8%89%B2%E5%B8%A7%E5%8A%A8%E7%94%BB%E5%88%B6%E4%BD%9C-AnimationPlayer-OR-AnimatedSprite2D/&is_video=false&description=AnimationPlayer OR AnimatedSprite2D"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=AnimationPlayer OR AnimatedSprite2D&body=Check out this article: http://example.com/2023/12/18/Godot4%E8%A7%92%E8%89%B2%E5%B8%A7%E5%8A%A8%E7%94%BB%E5%88%B6%E4%BD%9C-AnimationPlayer-OR-AnimatedSprite2D/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/12/18/Godot4%E8%A7%92%E8%89%B2%E5%B8%A7%E5%8A%A8%E7%94%BB%E5%88%B6%E4%BD%9C-AnimationPlayer-OR-AnimatedSprite2D/&title=AnimationPlayer OR AnimatedSprite2D"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/12/18/Godot4%E8%A7%92%E8%89%B2%E5%B8%A7%E5%8A%A8%E7%94%BB%E5%88%B6%E4%BD%9C-AnimationPlayer-OR-AnimatedSprite2D/&title=AnimationPlayer OR AnimatedSprite2D"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/12/18/Godot4%E8%A7%92%E8%89%B2%E5%B8%A7%E5%8A%A8%E7%94%BB%E5%88%B6%E4%BD%9C-AnimationPlayer-OR-AnimatedSprite2D/&title=AnimationPlayer OR AnimatedSprite2D"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/12/18/Godot4%E8%A7%92%E8%89%B2%E5%B8%A7%E5%8A%A8%E7%94%BB%E5%88%B6%E4%BD%9C-AnimationPlayer-OR-AnimatedSprite2D/&title=AnimationPlayer OR AnimatedSprite2D"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/12/18/Godot4%E8%A7%92%E8%89%B2%E5%B8%A7%E5%8A%A8%E7%94%BB%E5%88%B6%E4%BD%9C-AnimationPlayer-OR-AnimatedSprite2D/&name=AnimationPlayer OR AnimatedSprite2D&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#AnimationPlayer"><span class="toc-number">1.</span> <span class="toc-text">AnimationPlayer</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AnimatedSprite2D"><span class="toc-number">2.</span> <span class="toc-text">AnimatedSprite2D</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        AnimationPlayer OR AnimatedSprite2D
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">TESTERLIFE</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2023-12-18T12:41:00.000Z" itemprop="datePublished">2023-12-18</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/games/" rel="tag">games</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="AnimationPlayer"><a href="#AnimationPlayer" class="headerlink" title="AnimationPlayer"></a>AnimationPlayer</h1><h1 id="AnimatedSprite2D"><a href="#AnimatedSprite2D" class="headerlink" title="AnimatedSprite2D"></a>AnimatedSprite2D</h1><ol>
+<li><p>节点类型：<br>AnimatedSprite2D 是Godot引擎中用于在2D场景中播放动画的节点之一。</p>
+</li>
+<li><p>创建 AnimatedSprite2D 节点：<br>在Godot的场景编辑器中，右键点击场景根节点或其他节点，选择“添加节点（Add Node）”，然后搜索并选择 AnimatedSprite2D 节点，即可创建它。</p>
+</li>
+<li><p>属性和功能：<br>Frames（帧）： AnimatedSprite2D 通过纹理数组来表示动画。你可以将动画的帧作为纹理数组中的元素，每个纹理对应动画的一帧。</p>
+</li>
+</ol>
+<p>Frame Speed（帧速率）： 这个属性用于控制动画的播放速率，即每秒播放的帧数。</p>
+<p>播放控制：</p>
+<p>play(“animation_name”)：通过代码播放指定名称的动画。<br>stop()：停止动画播放。<br>animation_speed：设置动画的播放速度。<br>事件监听： AnimatedSprite2D 可以发出 animation_finished 信号，用于检测动画播放是否完成。</p>
+<ol start="4">
+<li>使用代码控制动画播放：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 播放动画</span><br><span class="line">$AnimatedSprite.play(&quot;animation_name&quot;)</span><br><span class="line"></span><br><span class="line"># 暂停动画</span><br><span class="line">$AnimatedSprite.stop()</span><br><span class="line"></span><br><span class="line"># 设置播放速度</span><br><span class="line">$AnimatedSprite.animation_speed = 2.0 # 将动画速度设置为原速度的两倍</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 5. **使用键帧动画编辑器：**</span><br><span class="line"></span><br><span class="line">可以使用Godot的键帧动画编辑器为 `AnimatedSprite2D` 创建动画轨道，并在时间轴上设置关键帧来控制动画播放、停止、以及动画速度等属性。</span><br><span class="line"></span><br><span class="line">### 6. **事件监听示例：**</span><br><span class="line"></span><br><span class="line"># 当动画播放完成时，触发信号</span><br><span class="line">func _on_AnimatedSprite_animation_finished():</span><br><span class="line">    # 执行相应的操作</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
+
+<p>可以将包含精灵序列帧的图像资源导入到Godot中，然后将其分割成单独的纹理，最后将这些纹理添加到 <code>AnimatedSprite2D</code> 的纹理数组中，以创建动画效果。</p>
+<p><code>AnimatedSprite2D</code> 是一个灵活且强大的2D动画节点，可以通过代码或视图编辑器方便地创建和控制2D动画。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">常用角色帧动画播放</span><br><span class="line">        animation_player.play(&quot;idle&quot;)</span><br><span class="line">        animation_player.play(&quot;walk&quot;)</span><br><span class="line">        animation_player.play(&quot;attack&quot;)</span><br><span class="line">        animation_player.play(&quot;run&quot;)</span><br><span class="line">        animation_player.play(&quot;jump&quot;)</span><br><span class="line">在Sprite中对角色帧动画进行预分配后, 定义animation_name, 即可在脚本中根据当前状态使用对应的帧动画</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/nhycraymond">Github</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#AnimationPlayer"><span class="toc-number">1.</span> <span class="toc-text">AnimationPlayer</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AnimatedSprite2D"><span class="toc-number">2.</span> <span class="toc-text">AnimatedSprite2D</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/12/18/Godot4%E8%A7%92%E8%89%B2%E5%B8%A7%E5%8A%A8%E7%94%BB%E5%88%B6%E4%BD%9C-AnimationPlayer-OR-AnimatedSprite2D/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/12/18/Godot4%E8%A7%92%E8%89%B2%E5%B8%A7%E5%8A%A8%E7%94%BB%E5%88%B6%E4%BD%9C-AnimationPlayer-OR-AnimatedSprite2D/&text=AnimationPlayer OR AnimatedSprite2D"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/12/18/Godot4%E8%A7%92%E8%89%B2%E5%B8%A7%E5%8A%A8%E7%94%BB%E5%88%B6%E4%BD%9C-AnimationPlayer-OR-AnimatedSprite2D/&title=AnimationPlayer OR AnimatedSprite2D"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/12/18/Godot4%E8%A7%92%E8%89%B2%E5%B8%A7%E5%8A%A8%E7%94%BB%E5%88%B6%E4%BD%9C-AnimationPlayer-OR-AnimatedSprite2D/&is_video=false&description=AnimationPlayer OR AnimatedSprite2D"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=AnimationPlayer OR AnimatedSprite2D&body=Check out this article: http://example.com/2023/12/18/Godot4%E8%A7%92%E8%89%B2%E5%B8%A7%E5%8A%A8%E7%94%BB%E5%88%B6%E4%BD%9C-AnimationPlayer-OR-AnimatedSprite2D/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/12/18/Godot4%E8%A7%92%E8%89%B2%E5%B8%A7%E5%8A%A8%E7%94%BB%E5%88%B6%E4%BD%9C-AnimationPlayer-OR-AnimatedSprite2D/&title=AnimationPlayer OR AnimatedSprite2D"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/12/18/Godot4%E8%A7%92%E8%89%B2%E5%B8%A7%E5%8A%A8%E7%94%BB%E5%88%B6%E4%BD%9C-AnimationPlayer-OR-AnimatedSprite2D/&title=AnimationPlayer OR AnimatedSprite2D"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/12/18/Godot4%E8%A7%92%E8%89%B2%E5%B8%A7%E5%8A%A8%E7%94%BB%E5%88%B6%E4%BD%9C-AnimationPlayer-OR-AnimatedSprite2D/&title=AnimationPlayer OR AnimatedSprite2D"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/12/18/Godot4%E8%A7%92%E8%89%B2%E5%B8%A7%E5%8A%A8%E7%94%BB%E5%88%B6%E4%BD%9C-AnimationPlayer-OR-AnimatedSprite2D/&title=AnimationPlayer OR AnimatedSprite2D"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/12/18/Godot4%E8%A7%92%E8%89%B2%E5%B8%A7%E5%8A%A8%E7%94%BB%E5%88%B6%E4%BD%9C-AnimationPlayer-OR-AnimatedSprite2D/&name=AnimationPlayer OR AnimatedSprite2D&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Raymond
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/nhycraymond">Github</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+
