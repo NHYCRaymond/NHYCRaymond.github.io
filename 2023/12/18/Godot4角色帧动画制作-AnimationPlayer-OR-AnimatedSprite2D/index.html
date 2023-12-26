@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="AnimationPlayerAnimatedSprite2D 节点类型：AnimatedSprite2D 是Godot引擎中用于在2D场景中播放动画的节点之一。  创建 AnimatedSprite2D 节点：在Godot的场景编辑器中，右键点击场景根节点或其他节点，选择“添加节点（Add Node）”，然后搜索并选择 AnimatedSprite2D 节点，即可创建它。  属性和功能：Fram">
+    <meta name="description" content="AnimationPlayer 和 AnimatedSprite2D 是 Godot 引擎中用于处理动画的两个不同的类。 AnimationPlayerAnimationPlayer 是用于控制和播放各种类型动画的通用工具。它可以在时间轴上管理许多类型的动画片段，包括位移、旋转、缩放、颜色变化、骨骼动画等。通过创建动画轨道（track）并设置关键帧（keyframe），可以对节点属性进行动画化。这">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AnimationPlayer OR AnimatedSprite2D">
 <meta property="og:url" content="http://example.com/2023/12/18/Godot4%E8%A7%92%E8%89%B2%E5%B8%A7%E5%8A%A8%E7%94%BB%E5%88%B6%E4%BD%9C-AnimationPlayer-OR-AnimatedSprite2D/index.html">
 <meta property="og:site_name" content="TESTERLIFE">
-<meta property="og:description" content="AnimationPlayerAnimatedSprite2D 节点类型：AnimatedSprite2D 是Godot引擎中用于在2D场景中播放动画的节点之一。  创建 AnimatedSprite2D 节点：在Godot的场景编辑器中，右键点击场景根节点或其他节点，选择“添加节点（Add Node）”，然后搜索并选择 AnimatedSprite2D 节点，即可创建它。  属性和功能：Fram">
+<meta property="og:description" content="AnimationPlayer 和 AnimatedSprite2D 是 Godot 引擎中用于处理动画的两个不同的类。 AnimationPlayerAnimationPlayer 是用于控制和播放各种类型动画的通用工具。它可以在时间轴上管理许多类型的动画片段，包括位移、旋转、缩放、颜色变化、骨骼动画等。通过创建动画轨道（track）并设置关键帧（keyframe），可以对节点属性进行动画化。这">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-12-18T12:41:00.000Z">
-<meta property="article:modified_time" content="2023-12-23T12:33:51.339Z">
+<meta property="article:modified_time" content="2023-12-26T06:35:54.513Z">
 <meta property="article:author" content="Raymond">
 <meta property="article:tag" content="games">
 <meta name="twitter:card" content="summary">
@@ -45,7 +45,7 @@
     <!-- rss -->
     
     
-<meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 6.3.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 <body>
     
@@ -140,7 +140,36 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="AnimationPlayer"><a href="#AnimationPlayer" class="headerlink" title="AnimationPlayer"></a>AnimationPlayer</h1><h1 id="AnimatedSprite2D"><a href="#AnimatedSprite2D" class="headerlink" title="AnimatedSprite2D"></a>AnimatedSprite2D</h1><ol>
+    <p><code>AnimationPlayer</code> 和 <code>AnimatedSprite2D</code> 是 Godot 引擎中用于处理动画的两个不同的类。</p>
+<p><code>AnimationPlayer</code><br>AnimationPlayer 是用于控制和播放各种类型动画的通用工具。<br>它可以在时间轴上管理许多类型的动画片段，包括位移、旋转、缩放、颜色变化、骨骼动画等。<br>通过创建动画轨道（track）并设置关键帧（keyframe），可以对节点属性进行动画化。这使得你能够以非常灵活的方式创建复杂的动画。<br>适用于更广泛的动画需求，可以用于角色动画、UI 动画、物体动画等等。</p>
+<p><code>AnimatedSprite2D</code><br>AnimatedSprite2D 是专门用于精灵动画的类。<br>它适用于简单的、基于帧的动画，即在单个精灵上播放一系列图像以创建动画效果。<br>通常用于实现角色动画的简单运动、攻击、受伤等动作，或者是一些简单的界面元素动画。<br>通过设置动画帧列表（frames）或使用动画表（animation sheet）可以轻松地切换精灵的不同动画帧。<br>本质上，AnimationPlayer 更适用于复杂的、基于属性的动画控制，可以操作节点的多个属性和轨道，而 AnimatedSprite2D 则更适合简单的基于图像帧的动画，主要用于处理单个精灵的动画序列。选择使用哪一个取决于你的具体需求和项目的规模以及复杂性。</p>
+<h1 id="AnimationPlayer"><a href="#AnimationPlayer" class="headerlink" title="AnimationPlayer"></a>AnimationPlayer</h1><ul>
+<li>多种类型的动画支持： 可以处理节点的各种属性动画，包括位置、旋转、缩放、颜色、纹理、骨骼动画等。</li>
+<li>多轨道管理： 允许在同一个 AnimationPlayer 中创建多个轨道，并在每个轨道上分别管理不同的节点属性。</li>
+<li>关键帧控制： 可以在时间轴上设置关键帧，以确定节点属性在不同时间点上的值。</li>
+<li>过渡效果和插值： 支持不同的插值方法和过渡效果，使得关键帧之间的过渡更加平滑。</li>
+<li>时间缩放和控制： 允许控制动画的播放速度、时间缩放，以及在动画播放时暂停、播放、倒放等。</li>
+<li>动画编辑器支持： 内置的动画编辑器可以直观地编辑和管理动画轨道，更容易创建和调整动画效果。</li>
+</ul>
+<p>适用场景：</p>
+<ul>
+<li>角色动画： 用于处理角色的各种动画，包括行走、奔跑、攻击、受伤、死亡等状态动画。</li>
+<li>特效动画： 用于创建复杂的特效动画，如粒子效果、环境动画、天气变化等。</li>
+<li>UI 动画： 用于创建界面元素的动画效果，包括按钮点击、界面切换、菜单动画等。</li>
+<li>游戏场景动画化： 可以控制整个游戏场景中的节点，实现场景中元素的运动、变形、渐变等动画效果。</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>提供了高度灵活性和控制力，能够创造复杂、精细的动画效果。</li>
+<li>支持多轨道管理，可以同时处理多个节点属性的动画。</li>
+<li>内置的编辑器使得创建、编辑和调整动画非常直观和便捷。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>对于简单的基于帧的动画来说，可能显得过于复杂。</li>
+<li>当需要大量的动画并行时，可能需要小心管理多个轨道，否则会显得混乱。</li>
+</ul>
+<h1 id="AnimatedSprite2D"><a href="#AnimatedSprite2D" class="headerlink" title="AnimatedSprite2D"></a>AnimatedSprite2D</h1><ol>
 <li><p>节点类型：<br>AnimatedSprite2D 是Godot引擎中用于在2D场景中播放动画的节点之一。</p>
 </li>
 <li><p>创建 AnimatedSprite2D 节点：<br>在Godot的场景编辑器中，右键点击场景根节点或其他节点，选择“添加节点（Add Node）”，然后搜索并选择 AnimatedSprite2D 节点，即可创建它。</p>
