@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>DirectionalLight2D 与 PointLight2D</title>
+      <link href="/2024/01/03/godot-2d-light/"/>
+      <url>/2024/01/03/godot-2d-light/</url>
+      
+        <content type="html"><![CDATA[<h1 id="DirectionalLight2D"><a href="#DirectionalLight2D" class="headerlink" title="DirectionalLight2D"></a>DirectionalLight2D</h1><p><code>DirectionalLight2D</code><br>    1. 发射平行的光线，模拟来自无限远处的光源，例如太阳光。<br>    2. 光线是平行的，不受距离影响，因此在整个场景中产生相似强度的光照。<br>    3. 通常用于模拟全局光照，例如白天和夜晚的环境光照。</p><h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><ul><li>Color（颜色）：光源的颜色。</li><li>Energy（能量）：光源的强度或亮度。</li><li>Scale（缩放）：光源的范围或大小。</li><li>Item Mask（物品遮罩）：确定哪些物体受光源影响的遮罩。</li><li>Mode（模式）：可用于设置光源的渲染模式。</li></ul><h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># 基于DirectionalLight2D的Energy属性, 设计一个模拟太阳升起落下的光线变化的方案</span><br><span class="line">extends DirectionalLight2D</span><br><span class="line"></span><br><span class="line">var max_energy = 2.0  # 最大能量值，表示白天光线最亮</span><br><span class="line">var min_energy = 0.5  # 最小能量值，表示夜晚光线较暗</span><br><span class="line"></span><br><span class="line">var day_duration = 120  # 一天的持续时间（以秒为单位）</span><br><span class="line">var current_time = 0  # 当前时间</span><br><span class="line"></span><br><span class="line">func _process(delta):</span><br><span class="line">    # 假设每帧时间递增，模拟时间流逝</span><br><span class="line">    current_time += delta</span><br><span class="line"></span><br><span class="line">    # 计算一天中当前时间的百分比（0到1之间）</span><br><span class="line">    var time_percent = current_time / day_duration</span><br><span class="line">    time_percent = fmod(time_percent, 1.0)  # 循环时间，确保在0到1之间</span><br><span class="line"></span><br><span class="line">    # 根据时间百分比来计算能量值</span><br><span class="line">    var energy = lerp(min_energy, max_energy, time_percent)</span><br><span class="line">    set_energy(energy)</span><br></pre></td></tr></table></figure><h1 id="PointLight2D"><a href="#PointLight2D" class="headerlink" title="PointLight2D"></a>PointLight2D</h1><p>在 Godot 4 中，PointLight2D 是用于2D场景的点光源。它模拟了一个发光点，类似于灯泡或发光物体，能够向各个方向发射光线。</p><p>以下是关于 <code>PointLight2D</code> 的一些详细信息：</p><h2 id="属性-1"><a href="#属性-1" class="headerlink" title="属性"></a>属性</h2><ol><li>光照属性：</li></ol><ul><li><p>光强度（Energy）：控制光的强度。增加此值会增加光照强度。</p></li><li><p>颜色（Color）：定义光的颜色。通过改变颜色可以创造出不同类型的光效果。</p></li><li><p>范围（Range）：定义光照的范围，即光能照射的最远距离。</p></li></ul><ol start="2"><li>其他属性：</li></ol><ul><li>影响遮罩（Affected By Mask）：可以选择性地指定该光源受到的遮罩影响。这允许光源只照亮特定的物体或区域。</li><li>光衰减（Attenuation）：光源在范围之外逐渐减弱的速度。</li></ul><ol start="3"><li>使用方法：<br>将 PointLight2D 添加到场景中，然后通过属性面板调整光照效果。</li></ol><p>可以通过脚本动态修改 PointLight2D 的属性，如位置、光强度、颜色等，以便在游戏运行时调整光照效果。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">extends PointLight2D</span><br><span class="line"></span><br><span class="line">func _ready():</span><br><span class="line">    # 游戏开始时设置光照的初始属性</span><br><span class="line">    set_position(Vector2(100, 100))  # 设置光源位置</span><br><span class="line">    set_energy(200)  # 设置光强度</span><br><span class="line">    set_color(Color(1, 1, 0.5))  # 设置光源颜色</span><br><span class="line"></span><br><span class="line">func _process(delta):</span><br><span class="line">    # 在游戏运行时按键来动态修改光照属性（示例）</span><br><span class="line">    if Input.is_action_pressed(&quot;ui_up&quot;):</span><br><span class="line">        # 按上箭头键增加光强度</span><br><span class="line">        set_energy(get_energy() + 10)</span><br><span class="line">    elif Input.is_action_pressed(&quot;ui_down&quot;):</span><br><span class="line">        # 按下箭头键减小光强度</span><br><span class="line">        set_energy(get_energy() - 10)</span><br><span class="line"></span><br><span class="line">    if Input.is_action_pressed(&quot;ui_left&quot;):</span><br><span class="line">        # 按左箭头键改变光源颜色</span><br><span class="line">        set_color(Color(1, 0, 0))  # 设置为红色</span><br><span class="line">    elif Input.is_action_pressed(&quot;ui_right&quot;):</span><br><span class="line">        # 按右箭头键改变光源颜色</span><br><span class="line">        set_color(Color(0, 0, 1))  # 设置为蓝色</span><br></pre></td></tr></table></figure><ol start="4"><li>应用场景：<br>用于模拟灯光、火焰等点状光源效果，为场景增添温暖或明亮的氛围。<br>可以用于创造动态的光影效果，比如光线在场景中移动时产生的光影变化。</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> games </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> godot4 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Godot4中Button与Label的使用</title>
       <link href="/2023/12/26/Godot4%E4%B8%ADButton%E4%B8%8ELabel%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
       <url>/2023/12/26/Godot4%E4%B8%ADButton%E4%B8%8ELabel%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
