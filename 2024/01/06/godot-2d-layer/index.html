@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="在Godot 4中，Layer 是用于控制渲染顺序和处理顺序的重要概念。通过正确配置层，您可以管理游戏对象的渲染和行为，确保它们以正确的顺序处理和显示。 在你的场景中，如果你有四种层级（Player、World、Enemy、Item），你可以按照以下步骤进行设置：辅助理解Layer层代表self, 而Mask更像是Target例如:    HitBox: 是需要攻击目标层级, 所以Layer层无需">
+    <meta name="description" content="在Godot 4中，Layer 是用于控制渲染顺序和处理顺序的重要概念。通过正确配置层，您可以管理游戏对象的渲染和行为，确保它们以正确的顺序处理和显示。 在你的场景中，如果你有四种层级（Player、World、Enemy、Item），你可以按照以下步骤进行设置： 辅助理解Layer层代表self, 而Mask更像是Target 123例如:    HitBox: 是需要攻击目标层级, 所以Lay">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Godot4中,Layer[图层]的配置与使用">
 <meta property="og:url" content="http://example.com/2024/01/06/godot-2d-layer/index.html">
 <meta property="og:site_name" content="TESTERLIFE">
-<meta property="og:description" content="在Godot 4中，Layer 是用于控制渲染顺序和处理顺序的重要概念。通过正确配置层，您可以管理游戏对象的渲染和行为，确保它们以正确的顺序处理和显示。 在你的场景中，如果你有四种层级（Player、World、Enemy、Item），你可以按照以下步骤进行设置：辅助理解Layer层代表self, 而Mask更像是Target例如:    HitBox: 是需要攻击目标层级, 所以Layer层无需">
+<meta property="og:description" content="在Godot 4中，Layer 是用于控制渲染顺序和处理顺序的重要概念。通过正确配置层，您可以管理游戏对象的渲染和行为，确保它们以正确的顺序处理和显示。 在你的场景中，如果你有四种层级（Player、World、Enemy、Item），你可以按照以下步骤进行设置： 辅助理解Layer层代表self, 而Mask更像是Target 123例如:    HitBox: 是需要攻击目标层级, 所以Lay">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-01-06T10:41:00.000Z">
-<meta property="article:modified_time" content="2024-01-07T07:35:33.741Z">
+<meta property="article:modified_time" content="2024-01-07T07:36:11.868Z">
 <meta property="article:author" content="Raymond">
 <meta property="article:tag" content="godot4">
 <meta name="twitter:card" content="summary">
@@ -142,7 +142,9 @@
 
   <div class="content" itemprop="articleBody">
     <p>在Godot 4中，Layer 是用于控制渲染顺序和处理顺序的重要概念。通过正确配置层，您可以管理游戏对象的渲染和行为，确保它们以正确的顺序处理和显示。</p>
-<p>在你的场景中，如果你有四种层级（Player、World、Enemy、Item），你可以按照以下步骤进行设置：<br>辅助理解<br>Layer层代表self, 而Mask更像是Target<br>例如:<br>    HitBox: 是需要攻击目标层级, 所以Layer层无需标识. 但是Mask层, 我们需要指向目标Target, 也就是Enemy Hurt Box 层级<br>    同理. 当我们配置HurtBox时, 我们的Layer层也就是self指向可能来源的目标层, 或自己的被击层级, Player Hurt Box, 而Target层则无需配置</p>
+<p>在你的场景中，如果你有四种层级（Player、World、Enemy、Item），你可以按照以下步骤进行设置：</p>
+<p><code>辅助理解</code><br><code>Layer层代表self, 而Mask更像是Target</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">例如:</span><br><span class="line">    HitBox: 是需要攻击目标层级, 所以Layer层无需标识. 但是Mask层, 我们需要指向目标Target, 也就是Enemy Hurt Box 层级</span><br><span class="line">    同理. 当我们配置HurtBox时, 我们的Layer层也就是self指向可能来源的目标层, 或自己的被击层级, Player Hurt Box, 而Target层则无需配置</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>创建Layer<br>打开你的场景。<br>在Godot编辑器的顶部菜单栏中选择 “Project” -&gt; “Project Settings”。<br>在弹出的窗口中，选择 “Layer Names” 选项卡。<br>在这里，你可以添加自定义的层级名称。添加 “Player”、”World”、”Enemy” 和 “Item” 这四个层级名称。</p>
 </li>
