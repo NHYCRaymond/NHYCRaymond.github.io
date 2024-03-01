@@ -1,0 +1,44 @@
+@startuml StateMachine
+
+abstract class StateMachine{
+    + transiton_state(current_state: State, next_state: State)
+    + get_next_state(current_state: State) stat: State
+    + tick_physics(current_state: State, delta: float) void
+    --
+    - _ready()
+    - _physics_process(delta: float)
+}
+
+class Player{
+    + transiton_state(current_state: State, next_state: State)
+    + get_next_state(current_state: State) stat: State
+    + tick_physics(current_state: State, delta: float) void
+}
+
+class EnemySkeloton{
+    + transiton_state(current_state: State, next_state: State)
+    + get_next_state(current_state: State) stat: State
+    + tick_physics(current_state: State, delta: float) void
+}
+
+interface Enum{}
+
+enum PlayerState{
+    + IDLE
+    + RUNNING
+    + JUMPING
+    + FALLING
+}
+
+enum EnemyState{
+    + IDLE
+    + ATTACK
+    + DEATH
+    + CHASE
+}
+
+StateMachine <-- Player
+StateMachine <--  EnemySkeloton
+Enum <-- PlayerState
+Enum <-- EnemyState
+@enduml
