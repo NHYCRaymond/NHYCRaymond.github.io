@@ -14,8 +14,9 @@
 <meta property="og:description" content="工作记录Q1M22024-02-26 增加tilemap遮挡shader(已废弃, 过多使用shader会造成场景性能下降) @date: 20240226  增加物品拾取tips提示(渐变、渐进、滑动) @date: 20240228  增加场景环境光效, 实现: 光源代码实现  现实时间对应游戏时间, 1s -&gt; 1m 启动游戏时, 获取系统的本地时间并更新到游戏   调整场景中tile">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/roadmap/20240226/tilemap%E6%88%BF%E5%AD%90%E5%BB%BA%E8%AE%BE.png">
+<meta property="og:image" content="http://example.com/roadmap/20240325/3f7m7-76mbm.gif">
 <meta property="article:published_time" content="2024-03-01T01:13:36.000Z">
-<meta property="article:modified_time" content="2024-03-02T08:31:36.299Z">
+<meta property="article:modified_time" content="2024-03-31T04:50:15.303Z">
 <meta property="article:author" content="Raymond">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/roadmap/20240226/tilemap%E6%88%BF%E5%AD%90%E5%BB%BA%E8%AE%BE.png">
@@ -46,7 +47,7 @@
     <!-- rss -->
     
     
-<meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 6.3.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 <body>
     
@@ -111,6 +112,30 @@
 </li>
 </ul>
 </li>
+</ul>
+<h2 id="Q1M3"><a href="#Q1M3" class="headerlink" title="Q1M3"></a>Q1M3</h2><h3 id="2024-03-25"><a href="#2024-03-25" class="headerlink" title="2024-03-25"></a>2024-03-25</h3><ul>
+<li>新增房屋场景[HOME]. @date:2024-03-25<ul>
+<li>灯光效果</li>
+<li>内部装饰设计</li>
+<li>外部房屋设计</li>
+</ul>
+</li>
+<li>增加时钟显示, 与环境光变化关联 @ date: 2024-03-27</li>
+<li>新增怪物出生点场景</li>
+<li>新增Enemy状态机与基类</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 结构示例</span></span><br><span class="line">BirthPoint</span><br><span class="line">   <span class="comment"># 出生点范围</span></span><br><span class="line">    - Detector</span><br><span class="line">       - CollisionShape2D</span><br><span class="line"><span class="comment"># Enemy组</span></span><br><span class="line">Bodies</span><br><span class="line">   <span class="comment"># Enemy个体</span></span><br><span class="line">   - Chomb [Enemy]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>新增Chomb Enemy @date: 2024-03-29</li>
+<li>新增巡逻机制</li>
+<li>新增怪物碰撞<ul>
+<li>与玩家碰撞</li>
+<li>与Enemy碰撞</li>
+</ul>
+</li>
+<li>新增怪物Astar寻路<br><img src="/../roadmap/20240325/3f7m7-76mbm.gif" alt="怪物出生点范围巡逻效果"></li>
+<li>新增CanvasLayer粒子效果</li>
 </ul>
 
   </div>
